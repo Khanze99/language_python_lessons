@@ -30,5 +30,5 @@ print(sum_all)
 
 # use list comprehension with reduce
 from functools import reduce
-sum_all = reduce(lambda a, b: a +b, [a for nested in objs_sum for a in nested])
+sum_all = reduce(lambda a, b: a + b, [a for nested in objs_sum for a in nested])
 print(sum_all)
