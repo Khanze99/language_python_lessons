@@ -1,5 +1,7 @@
 # Создайте менеджер контекста для безопасной обработки элементов словаря. В случае возникновения исключения словарь
 # должен оставаться без изменений. Иначе(при успешной работе) он сохранял бы все изменения.
+from contextlib import contextmanager
+from copy import deepcopy
 
 
 class DictManager:
@@ -26,5 +28,26 @@ with DictManager(d) as dm:
     dm['style'] = 'champion'
     print(dm['s'])
 
+print(d)
+
+
+d = {'name': 'Anvar', 'style': 'cool'}
+
+
+@contextmanager
+def save_dict(d):
+    original_dict = d
+    try:
+        copy_dict = deepcopy(original_dict)
+        yield copy_dict
+        original_dict.clear()
+        original_dict.update(copy_dict)
+    except Exception:
+        ...
+
+
+with save_dict(d) as dm:
+    dm['style'] = 'champion'
+    print(dm['k'])
 
 print(d)
