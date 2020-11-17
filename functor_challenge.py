@@ -20,7 +20,7 @@ p = [Person("Иванов", "Иван", 20),
 def sort_key(persons: list):
 
     def sorted_from_key(*args):
-        sorted_persons = []
+        sorted_persons = persons
         if 'surname' in args:
             sorted_persons = sorted(persons, key=lambda person: person.surname)
 
