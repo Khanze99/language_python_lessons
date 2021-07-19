@@ -20,7 +20,7 @@ class ListNode:
         return f"ListNode object val: {self.val}"
 
 
-class Solution:
+class Solution:  # 68 ms 14.3 mb memory usage
     # TODO need clear code
     """
     listNode = [7, 0, 8] -> 807
@@ -77,3 +77,26 @@ class Solution:
                         node2 = node2.next
 
         return l_node_result
+
+
+class SolutionD():  # 64 ms 14.2 mb memory usage
+
+    def add_two_numbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        res_node = ListNode()
+        prev = res_node
+        carry = 0
+
+        while l1 or l2 or carry:
+
+            val1 = (l1.val if l1 else 0)
+            val2 = (l2.val if l2 else 0)
+
+            carry, out = divmod(val1+val2+carry, 10)
+
+            prev.next = ListNode(val=out)
+            prev = prev.next
+
+            l1 = (l1.next if l1 else None)
+            l2 = (l2.next if l2 else None)
+
+        return res_node.next
