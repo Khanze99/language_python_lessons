@@ -5,44 +5,75 @@ class ListNode:
         self.val = val
         self.next = next
 
+    def create_list_node(self, numbers: list):
+        self.val = numbers[0]
+        prev = self
 
-# l1 = ListNode(val=2, next=ListNode(4, next=ListNode(3, next=None)))
-# l2 = ListNode(val=5, next=ListNode(6, next=ListNode(4, next=None)))
-l1 = ListNode(val=9, next=ListNode(9, next=ListNode(9, next=ListNode(9, next=ListNode(9, next=ListNode(9, next=ListNode(9, next=ListNode(9, next=ListNode(9, next=None)))))))))
-l2 = ListNode(val=9, next=ListNode(9, next=ListNode(9, next=ListNode(9, next=None))))
+        for i, n, in enumerate(numbers[1:]):
+            new = ListNode(val=n)
+            prev.next = new
+            prev = new
 
-# sum [7, 0, 8] -> 807
-# return list [ListNodes]
+        return self
+
+    def __repr__(self):
+        return f"ListNode object val: {self.val}"
 
 
 class Solution:
+    # TODO need clear code
+    """
+    listNode = [7, 0, 8] -> 807
+    return list [ListNode]
+    """
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        l_node_result = ListNode()
-        node1, node2 = l1, l2
-        prev = None
+        node1, node2 = l1.next, l2.next
+        l_node_result = ListNode(val=l1.val + l2.val)
+        prev = l_node_result
         while True:
-            if not l_node_result.val:
-                val = l1.val + l2.val
-                l_node_result.val = val
-                prev = l_node_result
-                node1, node2 = node1.next, node2.next
-                if not node1 and not node2:
-                    break
-                continue
-
-            if not node1 or not node2:
+            if not node1 and not node2:
+                if prev.val > 9:
+                    new = ListNode()
+                    new.val = prev.val // 10
+                    prev.val %= 10
+                    prev.next = new
                 break
 
-            new = ListNode()
-            new.val = node1.val + node2.val
+            if node1 and node2:
+                new = ListNode()
+                new.val = node1.val + node2.val
 
-            if prev:
-                if prev.val > 9:
-                    new.val += prev.val // 10
-                    prev.val %= 10
-                prev.next = new
-            prev = new
+                if prev:
+                    if prev.val > 9:
+                        new.val += prev.val // 10
+                        prev.val %= 10
+                    prev.next = new
+                prev = new
 
-            node1, node2 = node1.next, node2.next
+                node1, node2 = node1.next, node2.next
+
+            elif not node1 or not node2:
+                if node1:
+                    new = ListNode(val=node1.val)
+                if node2:
+                    new = ListNode(val=node2.val)
+                if prev:
+                    if prev.val > 9:
+                        new.val += prev.val // 10
+                        prev.val %= 10
+                    prev.next = new
+                prev = new
+
+                if node1 or node2:
+                    if (node1 and not node1.next) or (node2 and not node2.next):
+                        new = ListNode()
+                        new.val = prev.val // 10
+                        prev.val %= 10
+                        if new.val:
+                            prev.next = new
+                    if node1:
+                        node1 = node1.next
+                    if node2:
+                        node2 = node2.next
 
         return l_node_result
