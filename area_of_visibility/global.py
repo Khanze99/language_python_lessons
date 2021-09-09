@@ -7,4 +7,3 @@ def all_global():
 
 all_global()
 print(x)
-
