@@ -17,7 +17,7 @@ if __name__ == '__main__':
     for index in range(3):
 
         logging.info("Main               : create and start thread %d", index)
-        x = threading.Thread(target=thread_function, args=(index,))
+        x = threading.Thread(target=thread_function, args=(index,), daemon=True)
         threads.append(x)
         x.start()
 
@@ -25,3 +25,10 @@ if __name__ == '__main__':
         logging.info("Main               : before joining thread %d", index)
         thread.join()
         logging.info("Main               : thread %d done", index)
+    # logging.info("Main    : Before creating thread")
+    # x = threading.Thread(target=thread_function, args=(1, ), daemon=True)
+    # logging.info("Main    : Before running thread")
+    # x.start()
+    # logging.info("Main    : wait for the thread to finish")
+    # x.join()
+    # logging.info("Main    : all done")
