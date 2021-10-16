@@ -3,6 +3,7 @@ import logging
 import concurrent.futures as future
 import threading
 import time
+import queue
 
 
 SENTINEL = object()
@@ -27,31 +28,20 @@ def consumer(pipeline, event):
     logging.info("Consumer received EXIT event. Exiting")
 
 
-class Pipeline:
+class Pipeline(queue.Queue):
     def __init__(self):
-        self.message = 0
-        self.producer_lock = threading.Lock()
-        self.consumer_lock = threading.Lock()
-        self.consumer_lock.acquire()
+        super().__init__(maxsize=10)
 
     def get_message(self, name):
-        # logging.debug(f"{name}:about to acquire getlock")
-        self.consumer_lock.acquire()
-        # logging.debug(f"{name}:have getlock")
-        message = self.message
-        # logging.debug(f"{name}:about to release setlock")
-        self.producer_lock.release()
-        # logging.debug(f"{name}:setlock released")
-        return message
+        logging.debug(f"{name}:about to get from queue")
+        value = self.get()
+        logging.debug(f"{name}:got {value} from queue")
+        return value
 
-    def set_message(self, message, name):
-        # logging.debug(f"{name}: about to acquire setlock")
-        self.producer_lock.acquire()
-        # logging.debug(f"{name}:have setlock")
-        self.message = message
-        # logging.debug(f"{name}:about to release getlock")
-        self.consumer_lock.release()
-        # logging.debug(f"{name}:getlock released")
+    def set_message(self, value, name):
+        logging.debug(f"{name}: about to add {value} to queue")
+        self.put(value)
+        logging.debug(f"{name}:added {value} to queue")
 
 
 if __name__ == '__main__':
