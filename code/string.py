@@ -1,0 +1,2 @@
+
+print("string" * 8)
