@@ -1,4 +1,2 @@
-X = 99999
 
-import string
-print(string)
+print("Eggs" * 4)
