@@ -1,5 +1,8 @@
-from abc import ABC, abstractclassmethod
+from abc import ABCMeta, abstractclassmethod
 
 
-class AbstractFactory(ABC):
-    ...
+class Super(metaclass=ABCMeta):
+
+    @abstractclassmethod
+    def method(self):
+        pass
