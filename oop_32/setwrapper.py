@@ -36,3 +36,19 @@ class Set:
     def __repr__(self): return 'Set: ' + repr(self.data)
 
     def __iter__(self): return iter(self.data)
+
+
+class SubSet(Set):
+    def intersect(self, *other):
+        res = []
+        for i in self:
+            for x in other:
+                if i in x: res.append(i)
+        return Set(res)
+
+    def union(self, *other):
+        res = self.data[:]
+        for subother in other:
+            for x in subother:
+                if not x in res: res.append(x)
+        return Set(res)
