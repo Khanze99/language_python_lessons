@@ -15,6 +15,10 @@ class IService:
     pass
 
 
+class ConcreteImpl(IService):
+    pass
+
+
 class IServiceFactory(IService):
     @abstractmethod
     def make_svc(self):
@@ -22,12 +26,8 @@ class IServiceFactory(IService):
 
 
 class ServiceFactoryImpl(IServiceFactory):
-    def make_svc(self):
+    def make_svc(self) -> ConcreteImpl:
         return ConcreteImpl()
-
-
-class ConcreteImpl(IService):
-    pass
 
 
 class Application:
