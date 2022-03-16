@@ -2,6 +2,10 @@
 
 class Point:
     "Интерфейс координат"
+
+    def __init__(self, point):
+        self.point = point
+
     def getX(self):
         return self.x
 
