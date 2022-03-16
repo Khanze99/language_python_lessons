@@ -26,6 +26,5 @@ class Application:
     def __init__(self, service: ServiceFactoryImpl):
         self.service = service
 
-    def __getattr__(self, item):
-        if item == 'makeSvc':
-            return getattr(self.service, item)
+    def some_behavior(self):
+        concrete_impl = self.service.makeSvc()
