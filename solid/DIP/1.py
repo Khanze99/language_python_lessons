@@ -21,7 +21,7 @@ class ConcreteImpl(IService):
 
 class IServiceFactory(IService):
     @abstractmethod
-    def make_svc(self):
+    def make_svc(self) -> IService:
         pass
 
 
